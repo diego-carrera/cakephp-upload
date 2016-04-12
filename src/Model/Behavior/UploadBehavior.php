@@ -84,7 +84,7 @@ class UploadBehavior extends Behavior
                 continue;
             }
 
-            if ( $entity->getOriginal($field) ) {
+            if ( !$entity->isNew() && $entity->getOriginal($field) ) {
                 $dirField = Hash::get($settings, 'fields.dir', 'dir');
                 $file = [$entity->getOriginal($dirField) . $entity->getOriginal($field)];
                 $writer = $this->getWriter($entity, [], $field, $settings);
