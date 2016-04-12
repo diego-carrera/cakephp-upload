@@ -84,6 +84,14 @@ class UploadBehavior extends Behavior
                 continue;
             }
 
+            if ( $entity->getOriginal($field) ) {
+                $dirField = Hash::get($settings, 'fields.dir', 'dir');
+                $file = [$entity->getOriginal($dirField) . $entity->getOriginal($field)];
+                $writer = $this->getWriter($entity, [], $field, $settings);
+                $success = $writer->delete($file);
+            }
+
+
             $data = $entity->get($field);
             $path = $this->getPathProcessor($entity, $data, $field, $settings);
             $basepath = $path->basepath();
